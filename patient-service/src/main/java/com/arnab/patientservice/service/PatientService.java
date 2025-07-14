@@ -4,12 +4,14 @@ import com.arnab.patientservice.dto.PatientResponseDto;
 import com.arnab.patientservice.mapper.PatientMapper;
 import com.arnab.patientservice.model.Patient;
 import com.arnab.patientservice.repository.PatientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PatientService {
+    @Autowired
     private PatientRepository patientRepository;
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
