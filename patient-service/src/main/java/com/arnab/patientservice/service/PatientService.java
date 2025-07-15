@@ -2,6 +2,7 @@ package com.arnab.patientservice.service;
 
 import com.arnab.patientservice.dto.PatientRequestDTO;
 import com.arnab.patientservice.dto.PatientResponseDto;
+import com.arnab.patientservice.exception.EmailAlreadyExistsException;
 import com.arnab.patientservice.mapper.PatientMapper;
 import com.arnab.patientservice.model.Patient;
 import com.arnab.patientservice.repository.PatientRepository;
@@ -25,6 +26,10 @@ public class PatientService {
     }
 
     public PatientResponseDto createPatient(PatientRequestDTO patientRequestDTO){
+        if(patientRepository.existsByEmail(patientRequestDTO.getEmail())){
+            throw new EmailAlreadyExistsException("Email already exists: " + patientRequestDTO.getEmail());
+        }
+
         Patient patient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
         return PatientMapper.toPatientResponseDto(patient);
     }
