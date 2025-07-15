@@ -1,5 +1,6 @@
 package com.arnab.patientservice.service;
 
+import com.arnab.patientservice.dto.PatientRequestDTO;
 import com.arnab.patientservice.dto.PatientResponseDto;
 import com.arnab.patientservice.mapper.PatientMapper;
 import com.arnab.patientservice.model.Patient;
@@ -21,5 +22,10 @@ public class PatientService {
         List<Patient> patients = patientRepository.findAll();
         return patients.stream()
                 .map(PatientMapper::toPatientResponseDto).toList();
+    }
+
+    public PatientResponseDto createPatient(PatientRequestDTO patientRequestDTO){
+        Patient patient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
+        return PatientMapper.toPatientResponseDto(patient);
     }
 }
